@@ -6,6 +6,9 @@ const config = {
   preprocess: vitePreprocess(),
 
   kit: {
+    paths: {
+      base: '/feature/mts-shop-smarthome'
+    },
     adapter: adapter({
       fallback: 'index.html',
     }),
