@@ -121,7 +121,9 @@
 		<H1>Самые популярные товары</H1>
 
 		<div class="w-screen -ml-4">
-			<div class="flex gap-4 font-medium overflow-x-scroll text-nowrap no-scrollbar">
+			<div
+				class="flex gap-4 font-medium overflow-x-scroll text-nowrap whitespace-nowrap no-scrollbar"
+			>
 				{#each topCatList as cat, i}
 					<div
 						class="
@@ -210,7 +212,7 @@
 	<div>
 		<H1>Управляйте вашим домом с умом</H1>
 
-		<video autoplay muted loop class="rounded-2xl max-h-[247px] w-full object-cover">
+		<video autoplay playsinline muted loop class="rounded-2xl max-h-[247px] w-full object-cover">
 			<source src="./video{innerWidth <= 1280 ? '-mob' : ''}.mp4" type="video/mp4" />
 		</video>
 
