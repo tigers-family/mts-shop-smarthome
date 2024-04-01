@@ -213,7 +213,7 @@
 		<ShopLabelHeader class="md:hidden" />
 		<div class="flex gap-6 justify-between items-center">
 			<div class="flex gap-3 xl:gap-6 items-center">
-				<a href="/">
+				<a href="./">
 					<img src="./logo.svg" alt="logo" class="w-[85px] h-6 lg:w-[129px] lg:h-[33px]" />
 				</a>
 				<ShopLabelHeader class="hidden md:block lg:text-base px-2" />
