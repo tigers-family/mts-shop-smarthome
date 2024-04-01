@@ -224,7 +224,7 @@
 			</div>
 
 			<div class="flex gap-6 xl:gap-10">
-				<a href="/compare" class="flex gap-3 xl:gap-4 items-center">
+				<a href="./compare" class="flex gap-3 xl:gap-4 items-center">
 					<LikeImg class="h-[22px]" />
 					<CompareImg class="h-6 w-6" />
 					<CartImg class="h-[22px] hidden xl:block fill-white" />

@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		<div class="flex md:flex-row flex-col justify-start md:gap-4 gap-2">
-			<a href="/compare">
+			<a href="./compare">
 				<BtnSm
 					ignoreClick
 					class="!px-2 hover:fill-black fill-gray !w-full md:!w-max justify-center"
