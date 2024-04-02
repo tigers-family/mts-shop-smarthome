@@ -325,7 +325,7 @@
 			{#if lArrowRev}
 				<div
 					class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[151px] right-0 rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
-					on:click={() => scrollItems(-400, revsCont)}
+					on:click={() => scrollItems(400, revsCont)}
 				>
 					<ArrowImg class="w-[21px] h-[21px] ml-1 fill-black" />
 				</div>
@@ -333,7 +333,7 @@
 			{#if rArrowRev}
 				<div
 					class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[151px] rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
-					on:click={() => scrollItems(400, revsCont)}
+					on:click={() => scrollItems(-400, revsCont)}
 				>
 					<ArrowImg class="w-[21px] h-[21px] mr-1 fill-black rotate-180" />
 				</div>
