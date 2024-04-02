@@ -203,7 +203,7 @@
 <div
 	class="fixed z-[999] {isOpen
 		? ''
-		: 'hidden'} left-0 top-0 flex h-full w-full items-center justify-center bg-[#1F2637] bg-opacity-80 py-10"
+		: 'hidden'} left-0 top-0 flex h-full w-full items-center justify-center bg-[#1F2637] bg-opacity-80"
 ></div>
 
 <div
@@ -252,7 +252,7 @@
         absolute
         -left-2
         {isOpen ? '' : 'hidden'}
-        mt-4
+        mt-14
         rounded-b-xl
         shadow-[#141F3B80]
         shadow-lg

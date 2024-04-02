@@ -103,7 +103,44 @@
 
 	let containerEl: HTMLElement;
 	let itemsCont: HTMLElement;
+	let revsCont: HTMLElement;
 	let brandsCont: HTMLElement;
+
+	const scrollItems = (side: number, el: HTMLElement) => {
+		el.scroll({
+			left: el.scrollLeft + side,
+			behavior: 'smooth'
+		});
+	};
+
+	let lArrow = false;
+	let rArrow = false;
+
+	let lArrowRev = false;
+	let rArrowRev = false;
+
+	const itemsScrollHandler = (el: HTMLElement) => {
+		let itemsScrollLength = el?.scrollLeft || 0;
+
+		if (el?.id === 'rev') {
+			console.log(1);
+
+			rArrowRev = itemsScrollLength !== 0;
+			lArrowRev = itemsScrollLength < 350;
+
+			return;
+		}
+
+		if (innerWidth >= 1024) {
+			rArrow = itemsScrollLength !== 0;
+			lArrow = innerWidth < 1280 ? itemsScrollLength < 1150 : itemsScrollLength < 900;
+
+			return;
+		}
+
+		lArrow = false;
+		rArrow = false;
+	};
 
 	const handleResize = () => {
 		let position = containerEl.getBoundingClientRect();
@@ -115,18 +152,22 @@
 
 		itemsCont.style.paddingLeft =
 			brandsCont.style.paddingLeft =
-			itemsCont.style.paddingRight =
+			revsCont.style.paddingLeft =
+			revsCont.style.paddingRight =
 			brandsCont.style.paddingRight =
 				padding;
 	};
 
-	onMount(handleResize);
+	onMount(() => {
+		handleResize();
+		itemsScrollHandler();
+	});
 </script>
 
 <svelte:window bind:innerWidth on:resize={handleResize} />
 
 <div
-	class="px-4 md:px-0 mx-auto md:max-w-[624px] lg:max-w-[944px] xl:max-w-[1196px] overflow-hidden"
+	class="px-4 md:px-0 mx-auto md:max-w-[624px] lg:max-w-[944px] xl:max-w-[1196px]"
 	bind:this={containerEl}
 >
 	<FirstBlock />
@@ -143,7 +184,7 @@
 	<div class="py-6 md:py-8">
 		<H1>Самые популярные товары</H1>
 
-		<div class="w-screen -ml-4">
+		<div class="">
 			<div
 				class="flex gap-4 font-medium overflow-x-scroll text-nowrap whitespace-nowrap no-scrollbar"
 			>
@@ -151,8 +192,6 @@
 					<div
 						class="
               cursor-pointer
-            {i === 0 ? 'ml-4' : ''}
-            {i === topCatList.length - 1 ? 'pl-4' : ''}
             {cat.state ? 'text-red border-red border-b-2 pb-2' : ''}"
 						on:click={() => setTopCatState(i)}
 					>
@@ -162,7 +201,7 @@
 			</div>
 			<div class="border-[#E6E8F0] ml-4 -mt-[2px] border-b-2"></div>
 
-			<div class="ml-4 mt-5 mb-4 flex flex-row gap-2 items-start justify-start font-medium">
+			<div class=" mt-5 mb-4 flex flex-row gap-2 items-start justify-start font-medium">
 				<div class="text-gray text-base">Сортировать:</div>
 
 				<div class="relative z-10 group">
@@ -181,7 +220,7 @@
               shadow-[#141F3B80]
               shadow-lg
             bg-white
-            text-nowrap
+              text-nowrap
               text-[16px]
               flex
               flex-col
@@ -214,20 +253,40 @@
 
 			<div class="h-[34px]">
 				<div
-					class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0"
+					class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen md:w-full left-0"
 					bind:this={brandsCont}
 				>
-					<!-- <div class="overflow-x-scroll no-scrollbar"> -->
-					<BrandList class="mx-4 md:ml-0 lg:mx-4" />
+					<BrandList class="mx-4 md:ml-0" />
 				</div>
 			</div>
 
-			<div class="h-[467px] md:h-[427px]">
-				<div class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0">
+			<div class="relative">
+				{#if lArrow}
 					<div
-						class="mt-4 mx-4 md:mx-0 lg:ml-4 lg:mr-[98px] flex gap-4 font-medium"
+						class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[196px] right-0 rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
+						on:click={() => scrollItems(305, itemsCont)}
+					>
+						<ArrowImg class="w-[21px] h-[21px] ml-1 fill-black" />
+					</div>
+				{/if}
+				{#if rArrow}
+					<div
+						class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[196px] rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
+						on:click={() => scrollItems(-305, itemsCont)}
+					>
+						<ArrowImg class="w-[21px] h-[21px] mr-1 fill-black rotate-180" />
+					</div>
+				{/if}
+			</div>
+
+			<div class="h-[467px] md:h-[444px]">
+				<div class=" lg:relative absolute w-screen lg:w-full left-0">
+					<div
+						class="mt-4 flex gap-4 font-medium overflow-x-scroll no-scrollbar"
+						on:scroll={() => itemsScrollHandler(itemsCont)}
 						bind:this={itemsCont}
 					>
+						<ItemCard class="ml-4 md:hidden" />
 						<ItemCard />
 						<ItemCard />
 						<ItemCard />
@@ -235,7 +294,7 @@
 						<ItemCard />
 						<ItemCard />
 						<ItemCard />
-						<ItemCard />
+						<div class="p-1 md:hidden"></div>
 					</div>
 				</div>
 			</div>
@@ -260,12 +319,36 @@
 		<SubBlock />
 	</div>
 
-	<div>
+	<div class="overflow-hidden">
 		<H1>Отзывы покупателей</H1>
 
+		<div class="relative">
+			{#if lArrowRev}
+				<div
+					class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[151px] right-0 rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
+					on:click={() => scrollItems(-400, revsCont)}
+				>
+					<ArrowImg class="w-[21px] h-[21px] ml-1 fill-black" />
+				</div>
+			{/if}
+			{#if rArrowRev}
+				<div
+					class="flex cursor-pointer justify-center items-center w-[35px] h-[35px] bg-white absolute z-20 mt-[151px] rounded-full [box-shadow:_0_4px_4px_0_rgba(0,_0,_0,_0.25)]"
+					on:click={() => scrollItems(400, revsCont)}
+				>
+					<ArrowImg class="w-[21px] h-[21px] mr-1 fill-black rotate-180" />
+				</div>
+			{/if}
+		</div>
+
 		<div class="h-[467px] md:h-[427px]">
-			<div class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0">
-				<div class="flex gap-4 overflow-x-scroll no-scrollbar mx-4 md:ml-0 lg:mx-4">
+			<div class=" lg:relative absolute w-screen lg:w-full left-0">
+				<div
+					id="rev"
+					class="flex gap-4 overflow-x-scroll no-scrollbar mx-4 md:mx-0"
+					bind:this={revsCont}
+					on:scroll={() => itemsScrollHandler(revsCont)}
+				>
 					{#each reviews as { stars, name, title, desc }}
 						<Review {stars} {name} {title} {desc} />
 					{/each}
