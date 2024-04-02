@@ -123,8 +123,6 @@
 		let itemsScrollLength = el?.scrollLeft || 0;
 
 		if (el?.id === 'rev') {
-			console.log(1);
-
 			rArrowRev = itemsScrollLength !== 0;
 			lArrowRev = itemsScrollLength < 350;
 
@@ -160,7 +158,8 @@
 
 	onMount(() => {
 		handleResize();
-		itemsScrollHandler();
+		itemsScrollHandler(itemsCont);
+		itemsScrollHandler(revsCont);
 	});
 </script>
 

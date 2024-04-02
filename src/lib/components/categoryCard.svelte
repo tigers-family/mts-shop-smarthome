@@ -18,7 +18,7 @@
 				});
 			},
 			{
-				threshold: 1
+				threshold: 0.5
 			}
 		);
 
@@ -40,7 +40,7 @@
 			<img
 				class="object-cover h-[260px] md:h-[331px] lg:h-[260px] xl:h-[332px] absolute -right-[55px] -bottom-[65px]"
 				src={img}
-				in:fly={{ y: 200, duration: 2000 }}
+				in:fly={{ y: 200, duration: 1000 }}
 			/>
 		{/if}
 

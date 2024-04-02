@@ -188,9 +188,10 @@
 </script>
 
 <div
-	class="{isMenuOpen
-		? 'h-[calc(100vh-95px)] md:h-[calc(100vh-76px)] rounded-t-xl'
-		: 'h-[76px]'} bg-black sticky bottom-0 z-[999] flex xl:hidden justify-center"
+	class="
+  [transition:_height_300ms_ease]
+  {isMenuOpen ? 'h-[calc(100vh-95px)] md:h-[calc(100vh-76px)] rounded-t-xl' : 'h-[76px]'}
+  bg-black sticky bottom-0 z-[999] flex xl:hidden justify-center"
 >
 	{#if isMenuOpen}
 		<div class="w-[358px] flex justify-center relative">
@@ -222,6 +223,14 @@
 			</div>
 		</div>
 	{/if}
+</div>
+
+<div
+	class="
+  [transition:_height_300ms_ease]
+  h-[76px]
+  bg-black sticky bottom-0 z-[999] flex xl:hidden justify-center"
+>
 	<div
 		class="max-w-[358px] fixed bottom-4 w-full flex text-cool-grey-6 text-xs justify-between items-center px-4 gap-[23px]"
 	>
