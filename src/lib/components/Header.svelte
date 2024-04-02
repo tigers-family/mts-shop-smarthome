@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import Breadcrumb from './Breadcrumb.svelte';
 	import Button from './Button.svelte';
 	import CompareImg from './CompareImg.svelte';
@@ -177,11 +178,17 @@
 	];
 
 	let isOpen = false;
+	let isOpenAnim = false;
 	let dropdownMenu: HTMLElement;
 	let dropdownButton: HTMLElement;
 
-	const toggleDropdown = () => {
-		isOpen = !isOpen;
+	const toggleDropdown = (ev: MouseEvent, force = false) => {
+		if ((ev?.relatedTarget as HTMLElement)?.id === 'menu') return;
+
+		isOpen = force || !isOpen;
+		setTimeout(() => {
+			isOpenAnim = force || !isOpenAnim;
+		}, 0);
 	};
 
 	let selectedFirstCat: any = [];
@@ -200,11 +207,12 @@
 	};
 </script>
 
-<div
-	class="fixed z-[999] {isOpen
-		? ''
-		: 'hidden'} left-0 top-0 flex h-full w-full items-center justify-center bg-[#1F2637] bg-opacity-80"
-></div>
+{#if isOpen}
+	<div
+		transition:fade={{ duration: 300 }}
+		class="fixed z-[999] left-0 top-0 flex h-full w-full items-center justify-center bg-[#1F2637] bg-opacity-80"
+	></div>
+{/if}
 
 <div
 	class="h-[95px] mx-auto xl:w-[1195px] md:h-[76px] lg:h-[72px] w-screen p-4 xl:px-0 xl:py-[14px] lg:p-[14px] xl:shadow-none [box-shadow:0px_4px_4px_0px_rgba(29,_38,_72,_0.1)]"
@@ -240,13 +248,15 @@
 		<div class="relative group z-[999] h-full flex">
 			<div
 				class="flex flex-row gap-2 items-center cursor-pointer"
-				on:mouseenter={() => (isOpen = true)}
+				id="menu"
+				on:mouseleave={(e) => toggleDropdown(e, false)}
+				on:mouseenter={(e) => toggleDropdown(e, true)}
 			>
 				<List class="w-[14px] !text-white" />
 				<div bind:this={dropdownButton}>Каталог товаров</div>
 			</div>
 			<div
-				on:mouseleave={toggleDropdown}
+				on:mouseleave={(e) => toggleDropdown(e, false)}
 				bind:this={dropdownMenu}
 				class="
         absolute
@@ -265,8 +275,15 @@
         text-cool-grey-8
         "
 			>
-				<div class="flex text-black whitespace-nowrap">
-					<div class="{selectedFirstCat.length ? 'border-[#E1E4ED] border-r-[1px]' : ''} py-6">
+				<div
+					class="flex text-black whitespace-nowrap {isOpenAnim
+						? 'h-[408px]'
+						: 'h-[100px]'} [transition:_height_300ms_ease] overflow-hidden"
+				>
+					<div
+						id="menu"
+						class="{selectedFirstCat.length ? 'border-[#E1E4ED] border-r-[1px]' : ''} py-6"
+					>
 						{#each menuItems as item, i}
 							<div
 								on:mouseenter={() => setFirstCat(item)}
