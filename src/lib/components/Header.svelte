@@ -225,7 +225,7 @@
 
 			<div class="flex gap-6 xl:gap-10">
 				<a href="./compare" class="flex gap-3 xl:gap-4 items-center">
-					<LikeImg class="h-[22px]" />
+					<LikeImg ignore class="h-[22px]" />
 					<CompareImg class="h-6 w-6" />
 					<CartImg class="h-[22px] hidden xl:block fill-white" />
 				</a>
@@ -237,7 +237,7 @@
 
 <div class="bg-black h-14 relative hidden xl:block text-white">
 	<div class="mx-auto w-[1195px] h-full flex justify-between items-center">
-		<div class="relative group z-[999] h-full content-center">
+		<div class="relative group z-[999] h-full flex">
 			<div
 				class="flex flex-row gap-2 items-center cursor-pointer"
 				on:mouseenter={() => (isOpen = true)}
@@ -291,11 +291,16 @@
 						{/each}
 					</div>
 					{#if selectedFirstCat.length}
-						<div class="{selectedSecondCat.length ? 'border-[#E1E4ED] border-r-[1px]' : ''} py-6">
+						<div
+							class="{selectedSecondCat.length
+								? 'border-[#E1E4ED] border-r-[1px]'
+								: ''} py-6 whitespace-nowrap"
+						>
 							{#each selectedFirstCat as item, i}
 								<div
 									on:mouseenter={() => setSecondCat(item)}
 									class="
+
                 hover:bg-[#E1E4ED]
                 cursor-pointer
                 font-medium
