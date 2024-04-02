@@ -355,7 +355,7 @@
 	</div>
 </div>
 
-<div class="p-4 xl:p-0 md:px-0 md:max-w-[624px] lg:max-w-[944px] mx-auto">
+<div class="p-4 xl:p-0 md:px-0 md:max-w-[624px] lg:max-w-[944px] xl:max-w-[1195px] mx-auto">
 	<div class="xl:hidden">
 		<SearchBar />
 	</div>

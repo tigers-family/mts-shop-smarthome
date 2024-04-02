@@ -9,6 +9,7 @@
 	import OrderBlock from '$lib/components/orderBlock.svelte';
 	import Review from '$lib/components/review.svelte';
 	import SubBlock from '$lib/components/subBlock.svelte';
+	import { onMount } from 'svelte';
 
 	const catCards = [
 		{ title: 'Освещение', desc: 'Умные лампы и датчики движения', img: './cat/0.png' },
@@ -99,12 +100,34 @@
 	};
 
 	$: innerWidth = 0;
+
+	let containerEl: HTMLElement;
+	let itemsCont: HTMLElement;
+	let brandsCont: HTMLElement;
+
+	const handleResize = () => {
+		let position = containerEl.getBoundingClientRect();
+		let padding = `${position.left}px`;
+
+		if (innerWidth >= 1024) {
+			padding = '0px';
+		}
+
+		itemsCont.style.paddingLeft =
+			brandsCont.style.paddingLeft =
+			itemsCont.style.paddingRight =
+			brandsCont.style.paddingRight =
+				padding;
+	};
+
+	onMount(handleResize);
 </script>
 
-<svelte:window bind:innerWidth />
+<svelte:window bind:innerWidth on:resize={handleResize} />
 
 <div
 	class="px-4 md:px-0 mx-auto md:max-w-[624px] lg:max-w-[944px] xl:max-w-[1196px] overflow-hidden"
+	bind:this={containerEl}
 >
 	<FirstBlock />
 
@@ -190,21 +213,31 @@
 			</div>
 
 			<div class="h-[34px]">
-				<!-- <div class="overflow-x-scroll no-scrollbar absolute w-screen left-0"> -->
-				<div class="overflow-x-scroll no-scrollbar">
-					<BrandList class="mx-4" />
+				<div
+					class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0"
+					bind:this={brandsCont}
+				>
+					<!-- <div class="overflow-x-scroll no-scrollbar"> -->
+					<BrandList class="mx-4 md:ml-0 lg:mx-4" />
 				</div>
 			</div>
 
-			<div class="mt-4 flex gap-4 font-medium overflow-x-scroll no-scrollbar">
-				<ItemCard class="ml-4" />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard />
-				<ItemCard class="mr-4" />
+			<div class="h-[467px] md:h-[427px]">
+				<div class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0">
+					<div
+						class="mt-4 mx-4 md:mx-0 lg:ml-4 lg:mr-[98px] flex gap-4 font-medium"
+						bind:this={itemsCont}
+					>
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+						<ItemCard />
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -230,10 +263,14 @@
 	<div>
 		<H1>Отзывы покупателей</H1>
 
-		<div class="flex gap-4 overflow-x-scroll no-scrollbar">
-			{#each reviews as { stars, name, title, desc }}
-				<Review {stars} {name} {title} {desc} />
-			{/each}
+		<div class="h-[467px] md:h-[427px]">
+			<div class="overflow-x-scroll no-scrollbar lg:relative absolute w-screen left-0">
+				<div class="flex gap-4 overflow-x-scroll no-scrollbar mx-4 md:ml-0 lg:mx-4">
+					{#each reviews as { stars, name, title, desc }}
+						<Review {stars} {name} {title} {desc} />
+					{/each}
+				</div>
+			</div>
 		</div>
 	</div>
 

@@ -4,7 +4,6 @@
 	import ItemModal from '$lib/components/itemModal.svelte';
 	import MobileMenu from '$lib/components/mobileMenu.svelte';
 	import SubModal from '$lib/components/subModal.svelte';
-	import { writable } from 'svelte/store';
 </script>
 
 <SubModal />
