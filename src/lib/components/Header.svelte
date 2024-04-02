@@ -265,7 +265,7 @@
         text-cool-grey-8
         "
 			>
-				<div class="flex text-black">
+				<div class="flex text-black whitespace-nowrap">
 					<div class="{selectedFirstCat.length ? 'border-[#E1E4ED] border-r-[1px]' : ''} py-6">
 						{#each menuItems as item, i}
 							<div
@@ -291,11 +291,7 @@
 						{/each}
 					</div>
 					{#if selectedFirstCat.length}
-						<div
-							class="{selectedSecondCat.length
-								? 'border-[#E1E4ED] border-r-[1px]'
-								: ''} py-6 whitespace-nowrap"
-						>
+						<div class="{selectedSecondCat.length ? 'border-[#E1E4ED] border-r-[1px]' : ''} py-6">
 							{#each selectedFirstCat as item, i}
 								<div
 									on:mouseenter={() => setSecondCat(item)}
