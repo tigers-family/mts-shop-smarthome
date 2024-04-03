@@ -1,38 +1,47 @@
-# create-svelte
+# используемые технологии
+- Node.js v20.11.1
+- typescript 5.0.0
+- Yarn 1.22.19
+- svelte 4.2.7
+- tailwindcss 3.4.3
+- postcss 8.4.38
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+# установка
+`yarn` или `npm i`
 
-## Creating a project
+Проект включает в себя yarn.lock файл, использование пакетного менеджера `yarn` рекомендуется.
 
-If you're seeing this, you've probably already done this step. Congrats!
+# запуск в режиме разработки
+`yarn dev` или `npm run dev`
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+# сборка статичного билда
+`yarn build` или `npm run build`
 
-# create a new project in my-app
-npm create svelte@latest my-app
+Билд сохраняется в локальную папку `build` и включается в себя готовый к размещению статичный проект
+
+# демо-бэкенд
+Текущий демо-бэкенд включает в себя два эндпоинта:
+
+### sub
+
+```
+POST /sub
+{
+  email: string
+}
 ```
 
-## Developing
+Нужен для записи в почт из формы подписки на новости. Все записи уходят в локальную SQLite базу по пути `/requests/data/emails.db`
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+### /dashboard
+```
+GET /dashboard
 ```
 
-## Building
+Демонстрационная панель администратора для вывода данныех, записанных при помощи эндпоинта `/sub`
 
-To create a production version of your app:
-
-```bash
-npm run build
+Досуп к демо-кабинету:
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Логин: mts
+Пароль: JgGN7aHL9fhtDRQKPk2MuS
+```
