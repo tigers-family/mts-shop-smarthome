@@ -2,14 +2,43 @@
 	import Button from './Button.svelte';
 	import { subModal } from '$lib/modalStore';
 
+	let inp: HTMLInputElement;
 	let modalState = false;
+	let value: string;
+	let isWrongEmail = false;
 
 	subModal.subscribe((value) => {
 		modalState = value;
 	});
 
+	const validateEmail = (email: string) => {
+		return String(email)
+			.toLowerCase()
+			.match(
+				/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+			);
+	};
+
 	const toggleModal = () => {
+		if (isWrongEmail) {
+			inp.reportValidity();
+			return;
+		}
 		subModal.set(!modalState);
+
+		fetch('./sub', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({
+				email: value
+			})
+		});
+	};
+
+	const handleInput = () => {
+		isWrongEmail = !validateEmail(value);
 	};
 </script>
 
@@ -18,22 +47,25 @@
 
 	<div class="md:flex md:gap-3 mt-4">
 		<input
+			bind:value
+			bind:this={inp}
+			on:input={handleInput}
 			class="rounded
-      w-full
-      text-center
-      border-solid
-    border-[#e6e8f0]
-      hover:border-cool-grey-8
-      hover:placeholder:text-cool-grey-8
-      focus:outline-[#1481B4]
-      border-2
-      h-11
-      flex
-      justify-center
-      md:justify-start
-      items-center
-      md:flex-grow-[1]"
+        w-full
+        text-center
+        border-solid
+        {isWrongEmail ? 'border-red focus:outline-red' : 'border-[#e6e8f0] focus:outline-[#1481B4]'}
+        hover:border-cool-grey-8
+        hover:placeholder:text-cool-grey-8
+        border-2
+        h-11
+        flex
+        justify-center
+        md:justify-start
+        items-center
+        md:flex-grow-[1]"
 			placeholder="Введите ваш e-mail"
+			type="email"
 		/>
 
 		<Button on:click={toggleModal} class="w-full md:w-auto mt-6 md:mt-0">Подписаться</Button>
